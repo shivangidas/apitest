@@ -16,7 +16,7 @@ describe("DWP Users APIs", () => {
         .get("/api/v1/users")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.be.an("array");
+          res.body.should.have.property("result").that.is.an("array");
           done();
         });
     });
@@ -28,7 +28,7 @@ describe("DWP Users APIs", () => {
         .get("/api/v1/city/London/users")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.be.an("array");
+          res.body.should.have.property("result").that.is.an("array");
           done();
         });
     });
@@ -39,7 +39,10 @@ describe("DWP Users APIs", () => {
         .get("/api/v1/city/random/users")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.be.an("array").of.length(0);
+          res.body.should.have
+            .property("result")
+            .that.is.an("array")
+            .of.length(0);
           done();
         });
     });
@@ -48,10 +51,22 @@ describe("DWP Users APIs", () => {
     it("it should get all users close to London", done => {
       chai
         .request(server)
-        .get("/api/v1/near/city/London/users")
+        .get("/api/v1/near/distance/50/city/London/users")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.be.an("array");
+          res.body.should.have.property("result").that.is.an("array");
+          done();
+        });
+    });
+    it("it should fail for non-numeric distance", done => {
+      chai
+        .request(server)
+        .get("/api/v1/near/distance/xyz/city/london/users")
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("Distance cannot be non-numeric");
           done();
         });
     });
@@ -63,7 +78,7 @@ describe("DWP Users APIs", () => {
         .get("/api/v1/distance/50/city/London/users")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.be.an("array");
+          res.body.should.have.property("result").that.is.an("array");
           done();
         });
     });
@@ -74,7 +89,19 @@ describe("DWP Users APIs", () => {
         .get("/api/v1/distance/50/city/london/users")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.be.an("array");
+          res.body.should.have.property("result").that.is.an("array");
+          done();
+        });
+    });
+    it("it should fail for non-numeric distance", done => {
+      chai
+        .request(server)
+        .get("/api/v1/distance/xyz/city/london/users")
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("Distance cannot be non-numeric");
           done();
         });
     });
@@ -111,7 +138,9 @@ describe("/GET Page not found", () => {
       .get("/random")
       .end((err, res) => {
         res.should.have.status(404);
-        res.body.errorMessage.should.equal("Page Not Found");
+        res.body.should.have
+          .property("errorMessage")
+          .that.equals("Page Not Found");
         done();
       });
   });

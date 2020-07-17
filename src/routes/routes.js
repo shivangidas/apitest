@@ -8,7 +8,10 @@ module.exports = function(app, secureRoutes) {
   app.use("/api/v1", secureRoutes); // version 1 of the APIs
   secureRoutes.get("/users", userController.getAllUsers);
   secureRoutes.get("/city/:city/users", userController.getCityUsers);
-  secureRoutes.get("/near/city/:city/users", userController.getUsersNearCity);
+  secureRoutes.get(
+    "/near/distance/:distance/city/:city/users",
+    userController.getUsersNearCity
+  );
   secureRoutes.get(
     "/distance/:distance/city/:city/users",
     userController.getUsersInAndNearCity
@@ -23,11 +26,11 @@ module.exports = function(app, secureRoutes) {
   });
 
   // Handle 500
-  app.use(function(error, req, res, next) {
-    res.status(500).send({
-      errorCode: "500",
-      errorMessage: "Internal Server Error",
-      error: error
-    });
-  });
+  // app.use(function(error, req, res, next) {
+  //   res.status(500).send({
+  //     errorCode: "500",
+  //     errorMessage: "Internal Server Error",
+  //     error: error
+  //   });
+  // });
 };
