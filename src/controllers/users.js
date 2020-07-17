@@ -3,7 +3,7 @@ const axios = require("axios");
 const geodist = require("geodist");
 
 const config = require("../config/config");
-
+const cityCoord = require("../data/city");
 const externalURL = "https://bpdts-test-app.herokuapp.com";
 
 const getUsersFunc = () => axios.get(externalURL + "/users");
@@ -16,8 +16,8 @@ const getAllUsers = async (req, res) => {
     let users = await getUsersFunc();
     res.status(200).send(users.data);
   } catch (error) {
-    console.log(error);
-    res.status(404).send([]);
+    console.error(error);
+    res.status(500).send({ errorMessage: "Internal Server Error" });
   }
 };
 const getCityUsers = async (req, res) => {
@@ -26,8 +26,8 @@ const getCityUsers = async (req, res) => {
     let users = await getCityUsersFunc(city);
     res.status(200).send(users.data);
   } catch (error) {
-    console.log(error);
-    res.status(404).send([]);
+    console.error(error);
+    res.status(500).send({ errorMessage: "Internal Server Error" });
   }
 };
 
@@ -38,7 +38,7 @@ const getUsersNearCityFunc = async (distance, city) => {
   try {
     let users = await getUsersFunc();
     city = city.toLowerCase();
-    const location1 = config[city] || { lat: 0, lon: 0 };
+    const location1 = cityCoord[0][city] || { lat: 0, lon: 0 };
     let usersCloseToCity = users.data.filter(user =>
       distanceLessThanX(
         location1,
@@ -48,6 +48,7 @@ const getUsersNearCityFunc = async (distance, city) => {
     );
     return usersCloseToCity;
   } catch (error) {
+    console.error(error);
     return [];
   }
 };
@@ -56,13 +57,9 @@ const getUsersNearCity = async (req, res) => {
     let distance = req.params.distance || 50;
     let city = req.params.city || "London";
     let usersCloseToCity = await getUsersNearCityFunc(distance, city);
-    if (usersCloseToCity.length === 0) {
-      res.status(404).send([]);
-    } else {
-      res.status(200).send(usersCloseToCity);
-    }
+    res.status(200).send(usersCloseToCity);
   } catch (error) {
-    res.status(500).send({ errorMessage: "Error accessing API" });
+    res.status(500).send({ errorMessage: "Internal Server Error" });
   }
 };
 
@@ -73,11 +70,7 @@ const getUsersInAndNearCity = async (req, res) => {
     let usersCloseToCity = await getUsersNearCityFunc(distance, city);
     let usersInCity = await getCityUsersFunc(city);
     let totalUsers = usersCloseToCity.concat(usersInCity.data);
-    if (totalUsers.length === 0) {
-      res.status(404).send([]);
-    } else {
-      res.status(200).send(totalUsers);
-    }
+    res.status(200).send(totalUsers);
   } catch (error) {
     res.status(500).send({ errorMessage: "Internal Server Error" });
   }
