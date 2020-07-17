@@ -4,8 +4,7 @@ const geodist = require("geodist");
 
 const config = require("../config/config");
 const cityCoord = require("../data/city");
-const externalURL = "https://bpdts-test-app.herokuapp.com";
-
+const externalURL = config.externalURL;
 const getUsersFunc = () => axios.get(externalURL + "/users");
 const getCityUsersFunc = city => {
   city = city.charAt(0).toUpperCase() + city.slice(1);
@@ -16,8 +15,8 @@ const getAllUsers = async (req, res) => {
     let users = await getUsersFunc();
     res.status(200).send(users.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ errorMessage: "Internal Server Error" });
+    //console.error(error);
+    res.status(400).send({ errorMessage: "Internal Server Error" });
   }
 };
 const getCityUsers = async (req, res) => {
@@ -26,8 +25,8 @@ const getCityUsers = async (req, res) => {
     let users = await getCityUsersFunc(city);
     res.status(200).send(users.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ errorMessage: "Internal Server Error" });
+    //console.error(error);
+    res.status(400).send({ errorMessage: "Bad request" });
   }
 };
 
@@ -48,8 +47,8 @@ const getUsersNearCityFunc = async (distance, city) => {
     );
     return usersCloseToCity;
   } catch (error) {
-    console.error(error);
-    return [];
+    //console.error(error);
+    throw error;
   }
 };
 const getUsersNearCity = async (req, res) => {
