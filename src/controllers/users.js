@@ -5,6 +5,7 @@ const geodist = require("geodist");
 const config = require("../config/config");
 const cityCoord = require("../data/city");
 const externalURL = config.externalURL;
+
 const getUsersFunc = () => axios.get(externalURL + "/users");
 const getCityUsersFunc = city => {
   city = city.charAt(0).toUpperCase() + city.slice(1);
@@ -45,17 +46,19 @@ const getCityUsers = async (req, res) => {
 const distanceLessThanX = (location1, location2, distance) => {
   return geodist(location1, location2, { limit: distance });
 };
+
 const getUsersNearCityFunc = async (distance, city) => {
   try {
     const users = await getUsersFunc();
     city = city.toLowerCase();
-    const location1 = cityCoord[0][city];
+    const location1 = cityCoord.find(item => item.city === city);
     if (location1 === undefined) {
       throw "City not in Database";
     }
+    const location = { lat: location1.lat, lon: location1.lon };
     const usersCloseToCity = users.data.filter(user =>
       distanceLessThanX(
-        location1,
+        location,
         { lat: user.latitude, lon: user.longitude },
         distance
       )
@@ -126,6 +129,14 @@ const getUsersInAndNearCity = async (req, res) => {
       .status(200)
       .send({ code: "200", url: req.originalUrl, result: filteredArr });
   } catch (error) {
+    if (error === "City not in Database") {
+      res.status(400).send({
+        errorCode: "400",
+        url: req.originalUrl,
+        errorMessage: error
+      });
+      return;
+    }
     res.status(500).send({
       errorCode: "500",
       url: req.originalUrl,

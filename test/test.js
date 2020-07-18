@@ -48,7 +48,7 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
-    it("should fail with status 500", done => {
+    it("it should fail with status 500", done => {
       nockError();
       chai
         .request(server)
@@ -93,7 +93,7 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
-    it("should fail with status 500", done => {
+    it("it should fail with status 500", done => {
       nockError();
       chai
         .request(server)
@@ -148,7 +148,7 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
-    it("should fail with status 500", done => {
+    it("it should fail with status 500", done => {
       nockError();
       chai
         .request(server)
@@ -179,7 +179,7 @@ describe("DWP Users APIs", () => {
         });
     });
 
-    it("it should get all users in and close to London [case insensitive]", done => {
+    it("it should be case insensitive", done => {
       nockAllUsers();
       nockLondonUsers();
       chai
@@ -208,7 +208,20 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
-    it("should fail with status 500", done => {
+    it("it should fail for city not in records", done => {
+      nockAllUsers();
+      chai
+        .request(server)
+        .get("/api/v1/distance/50/city/tokyo/users")
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("City not in Database");
+          done();
+        });
+    });
+    it("it should fail with status 500", done => {
       nockError();
       chai
         .request(server)
