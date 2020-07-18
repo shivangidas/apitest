@@ -135,6 +135,19 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
+    it("it should fail for city not in records", done => {
+      nockAllUsers();
+      chai
+        .request(server)
+        .get("/api/v1/near/distance/50/city/tokyo/users")
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("City not in Database");
+          done();
+        });
+    });
     it("should fail with status 500", done => {
       nockError();
       chai

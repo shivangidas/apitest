@@ -27,7 +27,7 @@ const getAllUsers = async (req, res) => {
 };
 const getCityUsers = async (req, res) => {
   try {
-    let city = req.params.city || "London";
+    let city = req.params.city;
     let users = await getCityUsersFunc(city);
     res
       .status(200)
@@ -49,7 +49,10 @@ const getUsersNearCityFunc = async (distance, city) => {
   try {
     let users = await getUsersFunc();
     city = city.toLowerCase();
-    const location1 = cityCoord[0][city] || { lat: 0, lon: 0 };
+    const location1 = cityCoord[0][city];
+    if (location1 === undefined) {
+      throw "City not in Database";
+    }
     let usersCloseToCity = users.data.filter(user =>
       distanceLessThanX(
         location1,
@@ -65,8 +68,8 @@ const getUsersNearCityFunc = async (distance, city) => {
 };
 const getUsersNearCity = async (req, res) => {
   try {
-    let distance = req.params.distance || 50;
-    let city = req.params.city || "London";
+    let distance = req.params.distance;
+    let city = req.params.city;
     if (isNaN(distance)) {
       res.status(400).send({
         errorCode: "400",
@@ -80,6 +83,14 @@ const getUsersNearCity = async (req, res) => {
       .status(200)
       .send({ code: "200", url: req.originalUrl, result: usersCloseToCity });
   } catch (error) {
+    if (error === "City not in Database") {
+      res.status(400).send({
+        errorCode: "400",
+        url: req.originalUrl,
+        errorMessage: error
+      });
+      return;
+    }
     res.status(500).send({
       errorCode: "500",
       url: req.originalUrl,
@@ -90,8 +101,8 @@ const getUsersNearCity = async (req, res) => {
 
 const getUsersInAndNearCity = async (req, res) => {
   try {
-    let city = req.params.city || "London";
-    let distance = req.params.distance || 50;
+    let city = req.params.city;
+    let distance = req.params.distance;
     if (isNaN(distance)) {
       res.status(400).send({
         errorCode: "400",
