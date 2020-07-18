@@ -1,4 +1,4 @@
-# apitest
+# API test
 
 APIs for getting users in and close to a city
 
@@ -19,6 +19,8 @@ APIs for getting users in and close to a city
 3. Start the server
 
    <code>npm start</code>
+
+4. Call API as http://0.0.0.0:4040/api/v1/distance/50/city/London/users
 
 ## Test:
 
