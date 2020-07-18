@@ -21,7 +21,7 @@ APIs for getting users in and close to a city
    <code>npm start</code>
 
 4. Call API as http://0.0.0.0:4040/api/v1/distance/50/city/London/users \
-   API definition [here][https://github.com/shivangidas/apitest#apis]
+   API definition [here](https://github.com/shivangidas/apitest#apis)
 
 ## Test:
 
