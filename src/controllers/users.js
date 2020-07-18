@@ -6,11 +6,14 @@ const config = require("../config/config");
 const cityCoord = require("../data/city");
 const externalURL = config.externalURL;
 
+// Functions for calling APIs
 const getUsersFunc = () => axios.get(externalURL + "/users");
 const getCityUsersFunc = city => {
   city = city.charAt(0).toUpperCase() + city.slice(1);
   return axios.get(externalURL + `/city/${city}/users`);
 };
+
+// Controller for getting all users
 const getAllUsers = async (req, res) => {
   try {
     const users = await getUsersFunc();
@@ -26,6 +29,8 @@ const getAllUsers = async (req, res) => {
     });
   }
 };
+
+// Controller for getting users in city
 const getCityUsers = async (req, res) => {
   try {
     const city = req.params.city;
@@ -43,10 +48,12 @@ const getCityUsers = async (req, res) => {
   }
 };
 
+// Function to call geodist module that tells when two locations are within given limit in miles
 const distanceLessThanX = (location1, location2, distance) => {
   return geodist(location1, location2, { limit: distance });
 };
 
+// Function for finding users with coordinates within a given limit to a city
 const getUsersNearCityFunc = async (distance, city) => {
   try {
     const users = await getUsersFunc();
@@ -69,6 +76,8 @@ const getUsersNearCityFunc = async (distance, city) => {
     throw error;
   }
 };
+
+// Controller to get users close to a city (within distance)
 const getUsersNearCity = async (req, res) => {
   try {
     const distance = req.params.distance;
@@ -102,6 +111,7 @@ const getUsersNearCity = async (req, res) => {
   }
 };
 
+//Controller for getting users in and near a city (within distance)
 const getUsersInAndNearCity = async (req, res) => {
   try {
     const city = req.params.city;

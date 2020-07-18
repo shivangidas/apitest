@@ -10,7 +10,7 @@ const secureRoutes = express.Router();
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
 
-route(app, secureRoutes);
+route(app, secureRoutes); //API routes
 const server = app.listen(config.server.port, config.server.host, function() {
   var host = server.address().address;
   var serverPort = server.address().port;

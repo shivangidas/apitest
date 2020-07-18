@@ -4,12 +4,23 @@ APIs for getting users in and close to a city
 
 [![Build Status](https://travis-ci.com/shivangidas/apitest.svg?token=KMckoTpBEKUimWY3SsUN&branch=master)](https://travis-ci.com/shivangidas/apitest)
 
-### To run:
+## Install and run:
 
-<code>npm install</code>\
-<code>npm start</code>
+1. Git clone or download code
 
-### To Test:
+   <code>git clone git@github.com:shivangidas/apitest.git</code>
+
+2. Install dependencies
+
+   <code>npm install</code>
+
+3. Start the server
+
+   <code>npm start</code>
+
+## Test:
+
+Run tests using the following command
 
 <code>npm test</code>
 
