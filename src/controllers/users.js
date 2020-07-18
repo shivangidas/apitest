@@ -13,20 +13,32 @@ const getCityUsersFunc = city => {
 const getAllUsers = async (req, res) => {
   try {
     let users = await getUsersFunc();
-    res.status(200).send({ result: users.data });
+    res
+      .status(200)
+      .send({ code: "200", url: req.originalUrl, result: users.data });
   } catch (error) {
     //console.error(error);
-    res.status(500).send({ errorMessage: "API not reachable" });
+    res.status(500).send({
+      errorCode: "500",
+      url: req.originalUrl,
+      errorMessage: "API not reachable"
+    });
   }
 };
 const getCityUsers = async (req, res) => {
   try {
     let city = req.params.city || "London";
     let users = await getCityUsersFunc(city);
-    res.status(200).send({ result: users.data });
+    res
+      .status(200)
+      .send({ code: "200", url: req.originalUrl, result: users.data });
   } catch (error) {
     //console.error(error);
-    res.status(500).send({ errorMessage: "API not reachable" });
+    res.status(500).send({
+      errorCode: "500",
+      url: req.originalUrl,
+      errorMessage: "API not reachable"
+    });
   }
 };
 
@@ -56,13 +68,23 @@ const getUsersNearCity = async (req, res) => {
     let distance = req.params.distance || 50;
     let city = req.params.city || "London";
     if (isNaN(distance)) {
-      res.status(400).send({ errorMessage: "Distance cannot be non-numeric" });
+      res.status(400).send({
+        errorCode: "400",
+        url: req.originalUrl,
+        errorMessage: "Distance cannot be non-numeric"
+      });
       return;
     }
     let usersCloseToCity = await getUsersNearCityFunc(distance, city);
-    res.status(200).send({ result: usersCloseToCity });
+    res
+      .status(200)
+      .send({ code: "200", url: req.originalUrl, result: usersCloseToCity });
   } catch (error) {
-    res.status(500).send({ errorMessage: "API not reachable" });
+    res.status(500).send({
+      errorCode: "500",
+      url: req.originalUrl,
+      errorMessage: "API not reachable"
+    });
   }
 };
 
@@ -71,15 +93,25 @@ const getUsersInAndNearCity = async (req, res) => {
     let city = req.params.city || "London";
     let distance = req.params.distance || 50;
     if (isNaN(distance)) {
-      res.status(400).send({ errorMessage: "Distance cannot be non-numeric" });
+      res.status(400).send({
+        errorCode: "400",
+        url: req.originalUrl,
+        errorMessage: "Distance cannot be non-numeric"
+      });
       return;
     }
     let usersCloseToCity = await getUsersNearCityFunc(distance, city);
     let usersInCity = await getCityUsersFunc(city);
     let totalUsers = usersCloseToCity.concat(usersInCity.data);
-    res.status(200).send({ result: totalUsers });
+    res
+      .status(200)
+      .send({ code: "200", url: req.originalUrl, result: totalUsers });
   } catch (error) {
-    res.status(500).send({ errorMessage: "API not reachable" });
+    res.status(500).send({
+      errorCode: "500",
+      url: req.originalUrl,
+      errorMessage: "API not reachable"
+    });
   }
 };
 module.exports = {
