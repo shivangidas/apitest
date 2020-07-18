@@ -44,7 +44,7 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("result")
             .that.is.an("array")
-            .of.length(7);
+            .of.length(8);
           done();
         });
     });
@@ -74,7 +74,7 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("result")
             .that.is.an("array")
-            .of.length(6);
+            .of.length(7);
           done();
         });
     });
@@ -118,7 +118,7 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("result")
             .that.is.an("array")
-            .of.length(3);
+            .of.length(4);
           done();
         });
     });
@@ -174,7 +174,7 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("result")
             .that.is.an("array")
-            .of.length(9);
+            .of.length(10);
           done();
         });
     });
@@ -190,7 +190,7 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("result")
             .that.is.an("array")
-            .of.length(9);
+            .of.length(10);
           done();
         });
     });
