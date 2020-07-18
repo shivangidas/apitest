@@ -2,9 +2,9 @@
 
 APIs for getting users in and close to a city
 
-<!-- [![Build Status](https://travis-ci.com/shivangidas/apitest.svg?token=KMckoTpBEKUimWY3SsUN&branch=master)](https://travis-ci.com/shivangidas/apitest) -->
+[![Build Status](https://travis-ci.com/shivangidas/apitest.svg?token=KMckoTpBEKUimWY3SsUN&branch=master)](https://travis-ci.com/shivangidas/apitest)
 
-![Node.js CI](https://github.com/shivangidas/apitest/workflows/Node.js%20CI/badge.svg)
+<!-- ![Node.js CI](https://github.com/shivangidas/apitest/workflows/Node.js%20CI/badge.svg) -->
 
 ## Install and run:
 
