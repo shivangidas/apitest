@@ -67,6 +67,14 @@ Run tests using the following command
    Sample: http://0.0.0.0:4040/api/v1/near/distance/50/city/London/users \
    Success Response: <pre>{"code":"200","url":"/api/v1/near/distance/50/city/London/users","result":[{"id":266,"first_name":"Ancell","last_name":"Garnsworthy","email":"agarnsworthy7d@seattletimes.com","ip_address":"67.4.69.137","latitude":51.6553959,"longitude":0.0572553},{"id":322,"first_name":"Hugo","last_name":"Lynd","email":"hlynd8x@merriam-webster.com","ip_address":"109.0.153.166","latitude":51.6710832,"longitude":0.8078532},{"id":554,"first_name":"Phyllys","last_name":"Hebbs","email":"phebbsfd@umn.edu","ip_address":"100.89.186.13","latitude":51.5489435,"longitude":0.3860497}]}</pre>
 
+## Choices
+
+1. Node and Express used for creating server and APIs.
+2. Mocha, Chai, Nock used for testing and Istanbul for test coverage.
+3. geodist module used for getting coordinates difference in miles.
+4. Axios used for making http calls to external API.
+5. API is flexible to allow using any distance and city for future extensions.
+
 ## Future work
 
 1. Latitudes and longitudes for cities can be fetched from Google's Geocoding API. Currently using values saved as json in src/data
