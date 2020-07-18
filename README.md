@@ -6,9 +6,8 @@ APIs for getting users in and close to a city
 
 ### To run:
 
-<code>npm install
-
-npm start</code>
+<code>npm install</code>\
+<code>npm start</code>
 
 ### To Test:
 
