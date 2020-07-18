@@ -20,6 +20,9 @@ APIs for getting users in and close to a city
 
    <code>npm start</code>
 
+   By default starts at http://0.0.0.0:4040/ \
+   Can be changed using environment variables HOST and PORT
+
 4. Call API as http://0.0.0.0:4040/api/v1/distance/50/city/London/users \
    API definition [here](https://github.com/shivangidas/apitest#apis)
 
