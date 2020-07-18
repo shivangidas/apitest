@@ -8,12 +8,7 @@ const route = require("./routes/routes");
 const config = require("./config/config");
 const secureRoutes = express.Router();
 app.use(bodyParser.json()); // to support JSON-encoded bodies
-app.use(
-  bodyParser.urlencoded({
-    // to support URL-encoded bodies
-    extended: true
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
 
 route(app, secureRoutes);
 const server = app.listen(config.server.port, config.server.host, function() {
