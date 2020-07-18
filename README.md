@@ -20,7 +20,8 @@ APIs for getting users in and close to a city
 
    <code>npm start</code>
 
-4. Call API as http://0.0.0.0:4040/api/v1/distance/50/city/London/users
+4. Call API as http://0.0.0.0:4040/api/v1/distance/50/city/London/users \
+   API definition [here][https://github.com/shivangidas/apitest#apis]
 
 ## Test:
 
@@ -39,6 +40,10 @@ Run tests using the following command
     http://0.0.0.0:4040/api/v1/distance/abc/city/London/users
 
     <pre>{"errorCode":"400","url":"/api/v1/distance/abc/city/London/users","errorMessage":"Distance cannot be non-numeric"}</pre>
+
+    http://0.0.0.0:4040/api/v1/distance/100/city/Tokyo/users
+
+    <pre>{"errorCode":"400","url":"/api/v1/distance/100/city/Tokyo/users","errorMessage":"City not in Database"}</pre>
 
     When external API fails
 
