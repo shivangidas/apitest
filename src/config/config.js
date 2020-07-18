@@ -12,7 +12,7 @@ const dev = {
 const production = {
   server: {
     host: process.env.HOST || "0.0.0.0",
-    port: process.env.PORT || 3030
+    port: process.env.PORT || 4040
   },
   externalURL: process.env.EXTERNALURL || "https://bpdts-test-app.herokuapp.com"
 };
