@@ -16,7 +16,7 @@ const getAllUsers = async (req, res) => {
     res.status(200).send({ result: users.data });
   } catch (error) {
     //console.error(error);
-    res.status(400).send({ errorMessage: "Internal Server Error" });
+    res.status(500).send({ errorMessage: "API not reachable" });
   }
 };
 const getCityUsers = async (req, res) => {
@@ -26,7 +26,7 @@ const getCityUsers = async (req, res) => {
     res.status(200).send({ result: users.data });
   } catch (error) {
     //console.error(error);
-    res.status(400).send({ errorMessage: "Bad request" });
+    res.status(500).send({ errorMessage: "API not reachable" });
   }
 };
 
@@ -62,7 +62,7 @@ const getUsersNearCity = async (req, res) => {
     let usersCloseToCity = await getUsersNearCityFunc(distance, city);
     res.status(200).send({ result: usersCloseToCity });
   } catch (error) {
-    res.status(500).send({ errorMessage: "Internal Server Error" });
+    res.status(500).send({ errorMessage: "API not reachable" });
   }
 };
 
@@ -79,7 +79,7 @@ const getUsersInAndNearCity = async (req, res) => {
     let totalUsers = usersCloseToCity.concat(usersInCity.data);
     res.status(200).send({ result: totalUsers });
   } catch (error) {
-    res.status(500).send({ errorMessage: "Internal Server Error" });
+    res.status(500).send({ errorMessage: "API not reachable" });
   }
 };
 module.exports = {

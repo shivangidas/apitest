@@ -2,6 +2,7 @@
 "use strict";
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+const nock = require("nock");
 const server = require("../src/server");
 
 const should = chai.should();
@@ -9,6 +10,9 @@ const userController = require("../src/controllers/users");
 chai.use(chaiHttp);
 
 describe("DWP Users APIs", () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
   describe("/GET users", () => {
     it("it should get all users from external api", done => {
       chai
@@ -20,7 +24,24 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
+    it("should fail with status 500", done => {
+      nock("https://bpdts-test-app.herokuapp.com")
+        .get("/")
+        .reply(400, { errorMessage: "test error" });
+
+      chai
+        .request(server)
+        .get("/api/v1/users")
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("API not reachable");
+          done();
+        });
+    });
   });
+
   describe("/GET users in  London", () => {
     it("it should get all users in London", done => {
       chai
@@ -46,6 +67,22 @@ describe("DWP Users APIs", () => {
           done();
         });
     });
+    it("should fail with status 500", done => {
+      nock("https://bpdts-test-app.herokuapp.com")
+        .get("/")
+        .reply(400, { errorMessage: "test error" });
+
+      chai
+        .request(server)
+        .get("/api/v1/city/London/users")
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("API not reachable");
+          done();
+        });
+    });
   });
   describe("/GET users close to London", () => {
     it("it should get all users close to London", done => {
@@ -67,6 +104,22 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("errorMessage")
             .that.equals("Distance cannot be non-numeric");
+          done();
+        });
+    });
+    it("should fail with status 500", done => {
+      nock("https://bpdts-test-app.herokuapp.com")
+        .get("/")
+        .reply(400, { errorMessage: "test error" });
+
+      chai
+        .request(server)
+        .get("/api/v1/near/distance/50/city/London/users")
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("API not reachable");
           done();
         });
     });
@@ -102,6 +155,22 @@ describe("DWP Users APIs", () => {
           res.body.should.have
             .property("errorMessage")
             .that.equals("Distance cannot be non-numeric");
+          done();
+        });
+    });
+    it("should fail with status 500", done => {
+      nock("https://bpdts-test-app.herokuapp.com")
+        .get("/")
+        .reply(400, { errorMessage: "test error" });
+
+      chai
+        .request(server)
+        .get("/api/v1/distance/50/city/London/users")
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.have
+            .property("errorMessage")
+            .that.equals("API not reachable");
           done();
         });
     });
