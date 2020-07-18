@@ -110,7 +110,6 @@ describe("DWP Users APIs", () => {
   describe("/GET users close to London", () => {
     it("it should get all users close to London", done => {
       nockAllUsers();
-
       chai
         .request(server)
         .get("/api/v1/near/distance/50/city/London/users")
@@ -138,7 +137,6 @@ describe("DWP Users APIs", () => {
     });
     it("should fail with status 500", done => {
       nockError();
-
       chai
         .request(server)
         .get("/api/v1/near/distance/50/city/London/users")
@@ -246,6 +244,17 @@ describe("/GET Page not found", () => {
         res.body.should.have
           .property("errorMessage")
           .that.equals("Page Not Found");
+        done();
+      });
+  });
+});
+describe("/GET Test external API", () => {
+  it("it should return success response", done => {
+    chai
+      .request(server)
+      .get("/api/v1/city/London/users")
+      .end((err, res) => {
+        res.should.have.status(200);
         done();
       });
   });
