@@ -6,15 +6,15 @@ const dev = {
     host: process.env.HOST || "0.0.0.0",
     port: process.env.PORT || 4040
   },
-  externalURL: "https://bpdts-test-app.herokuapp.com"
+  externalURL: process.env.EXTERNALURL || "https://bpdts-test-app.herokuapp.com"
 };
 
 const production = {
   server: {
     host: process.env.HOST || "0.0.0.0",
-    port: process.env.PORT || 4040
+    port: process.env.PORT || 3030
   },
-  externalURL: "https://bpdts-test-app.herokuapp.com"
+  externalURL: process.env.EXTERNALURL || "https://bpdts-test-app.herokuapp.com"
 };
 
 const config = { dev, production };

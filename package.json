@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nyc mocha",
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "export NODE_ENV=production && node src/server.js"
   },
   "repository": {
     "type": "git",
