@@ -1,12 +1,10 @@
-[
-  {
-    "city": "london",
+{
+  "london": {
     "lat": 51.509865,
     "lon": -0.118092
   },
-  {
-    "city": "bristol",
+  "bristol": {
     "lat": 51.454514,
     "lon": -2.58791
   }
-]
+}

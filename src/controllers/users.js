@@ -58,11 +58,10 @@ const getUsersNearCityFunc = async (distance, city) => {
   try {
     const users = await getUsersFunc();
     city = city.toLowerCase();
-    const location1 = cityCoord.find(item => item.city === city);
-    if (location1 === undefined) {
+    const location = cityCoord[city];
+    if (location === undefined) {
       throw "City not in Database";
     }
-    const location = { lat: location1.lat, lon: location1.lon };
     const usersCloseToCity = users.data.filter(user =>
       distanceLessThanX(
         location,
